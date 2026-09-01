@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Utabiri — Web app (mockup)</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Spline+Sans+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="style.css">
+<style>
+.web{max-width:1060px; margin:30px auto; background:var(--screen); border:1px solid var(--line); border-radius:14px; overflow:hidden; box-shadow:0 12px 40px rgba(20,30,20,.08)}
+.wbar{display:flex; align-items:center; gap:8px; background:var(--chip); border-bottom:1px solid var(--line); padding:9px 14px}
+.dot{width:10px; height:10px; border-radius:50%; background:var(--line)}
+.url{font-family:"Spline Sans Mono",monospace; font-size:.72rem; color:var(--muted); background:var(--card); border:1px solid var(--line); border-radius:999px; padding:4px 14px; margin-left:10px}
+.wnav{display:flex; align-items:center; gap:14px; padding:14px 22px; border-bottom:1px solid var(--line)}
+.wnav .logo{font-size:1.25rem}
+.wnav .chips{padding:0; flex:1}
+.wgrid{display:grid; grid-template-columns:330px 1fr; gap:0; min-height:560px}
+.wlist{border-right:1px solid var(--line); padding:14px; display:flex; flex-direction:column; gap:10px; background:var(--ground)}
+.wlist h5{margin:2px 4px 0; font-size:.7rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+.wmain{padding:22px 26px}
+.wmain .source{margin-bottom:10px}
+.wcols{display:grid; grid-template-columns:1fr 300px; gap:20px; align-items:start}
+@media (max-width:900px){.wgrid{grid-template-columns:1fr}.wlist{border-right:none;border-bottom:1px solid var(--line)}.wcols{grid-template-columns:1fr}}
+</style></head><body>
+<p class="screen-label">Web version · desktop layout (feed + market + slip on one screen)</p>
+<div class="web">
+  <div class="wbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">utabiri.co.ke/m/ruto-2027</span></div>
+  <div class="wnav">
+    <div class="logo">uta<span>biri</span></div>
+    <div class="chips"><a class="chip on" href="#">Zote</a><a class="chip" href="#">Siasa</a><a class="chip" href="#">Michezo</a><a class="chip" href="#">Uchumi</a><a class="chip" href="#">Burudani</a></div>
+    <div class="balance">UP 12,450</div>
+  </div>
+  <div class="wgrid">
+    <aside class="wlist">
+      <h5>Masoko moto leo</h5>
+      <a class="mcard" href="#">
+        <span class="tag">SIASA</span><h3>Ruto wins the 2027 presidential election?</h3>
+        <div class="row"><span class="pill yes">34%<small>NDIYO</small></span><span class="pill no">66%<small>HAPANA</small></span></div>
+      </a>
+      <a class="mcard" href="#">
+        <span class="tag">SIASA</span><h3>United Opposition fields a single candidate?</h3>
+        <div class="row"><span class="pill yes">41%<small>NDIYO</small></span><span class="pill no">59%<small>HAPANA</small></span></div>
+      </a>
+      <a class="mcard" href="#">
+        <span class="tag">MICHEZO</span><h3>Arsenal wins the EPL by 3+ points?</h3>
+        <div class="row"><span class="pill yes">22%<small>YES</small></span><span class="pill no">78%<small>NO</small></span></div>
+      </a>
+      <a class="mcard" href="#">
+        <span class="tag">UCHUMI</span><h3>Petrol &gt; KES 190/L in October EPRA review?</h3>
+        <div class="row"><span class="pill yes">57%<small>NDIYO</small></span><span class="pill no">43%<small>HAPANA</small></span></div>
+      </a>
+    </aside>
+    <main class="wmain">
+      <span class="tag mono" style="color:var(--accent); font-size:.62rem; letter-spacing:.1em">SIASA · MARKET #001 · UP 4.2M TRADED</span>
+      <h2 style="font-size:1.5rem; letter-spacing:-.01em; margin:8px 0 4px">Will Ruto win the 2027 presidential election?</h2>
+      <p class="source">Chanzo cha matokeo: <b>IEBC official declaration</b> · resolves by 24 Aug 2027 · dispute window 48h · <a href="#" style="color:var(--accent)">resolution log</a></p>
+      <div class="wcols">
+        <div>
+          <div class="bigprice">
+            <span class="pill yes">34%<small>NDIYO · 2.94</small></span>
+            <span class="pill no">66%<small>HAPANA · 1.52</small></span>
+          </div>
+          <div class="chart">
+            <svg viewBox="0 0 480 130" style="display:block;width:100%;height:auto" role="img" aria-label="Price history June to September: YES probability falling from 45% to 34%">
+              <polyline points="0,55 40,58 80,52 120,63 160,69 200,66 240,75 280,72 320,80 360,78 420,84 480,86" fill="none" stroke="#0E7B4C" stroke-width="2.5"/>
+              <line x1="0" y1="65" x2="480" y2="65" stroke="#DCE0D2" stroke-dasharray="5 5"/>
+              <text x="6" y="18" font-size="11" fill="#5C685D" font-family="monospace">JUN 45% → SEP 34% · 1,204 wanabiri</text>
+            </svg>
+          </div>
+          <div class="rules"><b>Sheria za soko:</b> Resolves NDIYO if the IEBC declares William Ruto president-elect in the 2027 general election (including any run-off). Market suspends on election day per GRA direction.</div>
+        </div>
+        <div class="slip">
+          <h4>Weka utabiri wako</h4>
+          <div class="side"><button class="on">NDIYO · 34%</button><button>HAPANA</button></div>
+          <div class="stake"><span class="mono" style="color:var(--muted);font-size:.8rem">UP</span><input value="500" inputmode="numeric"></div>
+          <div class="calc"><span>Ukishinda unapata</span><b>UP 1,441</b></div>
+          <div class="calc"><span>Bei (incl. ~4% spread)</span><b>34.7¢</b></div>
+          <a class="cta" href="#">Weka Utabiri →</a>
+          <p class="note">Cash-out wakati wowote kabla ya matokeo</p>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+</body></html>

@@ -1,27 +1,511 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Utabiri — Mockup flow index</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Utabiri — MVP preview</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Spline+Sans+Mono:wght@400;600&display=swap">
-<link rel="stylesheet" href="style.css">
 <style>
-  .idx{max-width:640px; margin:40px auto; padding:0 20px}
-  .idx h1{font-size:1.8rem; letter-spacing:-.02em; margin:0 0 6px}
-  .idx p.lead{color:var(--muted); margin:0 0 24px}
-  .flow{display:flex; flex-direction:column; gap:10px}
-  .step{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px 16px; text-decoration:none; color:inherit; display:grid; grid-template-columns:44px 1fr; gap:12px; align-items:start}
-  .step .n{font-family:"Spline Sans Mono",monospace; font-weight:600; color:var(--accent); font-size:.8rem; padding-top:2px}
-  .step b{display:block; margin-bottom:2px}
-  .step small{color:var(--muted); line-height:1.4}
+/* Utabiri mockups — shared styles (placeholder UI, play-money beta framing) */
+:root{
+  --ground:#F2F4EC; --screen:#FBFCF8; --ink:#1B231C; --muted:#5C685D;
+  --accent:#0E7B4C; --accent-soft:#E2F0E8; --no:#B0492F; --no-soft:#F6E7E1;
+  --line:#DCE0D2; --card:#FFFFFF; --chip:#EEF0E6;
+}
+*{box-sizing:border-box}
+body{margin:0; background:var(--ground); color:var(--ink);
+  font-family:"Schibsted Grotesk","Helvetica Neue",Arial,sans-serif; line-height:1.45}
+.mono{font-family:"Spline Sans Mono",ui-monospace,Menlo,monospace}
+.phone{max-width:400px; margin:24px auto; background:var(--screen); border:1px solid var(--line);
+  border-radius:26px; min-height:780px; display:flex; flex-direction:column; overflow:hidden;
+  box-shadow:0 12px 40px rgba(20,30,20,.08)}
+.screen-label{max-width:400px; margin:18px auto -14px; font-family:"Spline Sans Mono",monospace;
+  font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); text-align:center}
+.topbar{display:flex; align-items:center; justify-content:space-between; padding:16px 18px 10px}
+.logo{font-weight:800; font-size:1.15rem; letter-spacing:-.02em}
+.logo span{color:var(--accent)}
+.balance{font-family:"Spline Sans Mono",monospace; font-size:.78rem; font-weight:600;
+  background:var(--accent-soft); color:var(--accent); border-radius:999px; padding:5px 12px}
+.beta{margin:6px 18px 10px; font-size:.72rem; color:var(--muted); background:var(--chip);
+  border:1px dashed var(--line); border-radius:8px; padding:6px 10px; text-align:center}
+.chips{display:flex; gap:8px; padding:4px 18px 12px; overflow-x:auto}
+.chip{font-size:.78rem; font-weight:600; border:1px solid var(--line); border-radius:999px;
+  padding:5px 13px; white-space:nowrap; color:var(--muted); text-decoration:none}
+.chip.on{background:var(--ink); color:var(--screen); border-color:var(--ink)}
+.feed{padding:0 14px 20px; display:flex; flex-direction:column; gap:10px; flex:1}
+.mcard{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 14px 12px; text-decoration:none; color:inherit; display:block}
+.mcard .tag{font-family:"Spline Sans Mono",monospace; font-size:.62rem; font-weight:600; letter-spacing:.1em; color:var(--accent)}
+.mcard h3{margin:4px 0 10px; font-size:.95rem; line-height:1.3; font-weight:700}
+.row{display:flex; align-items:center; justify-content:space-between; gap:8px}
+.pill{flex:1; text-align:center; border-radius:9px; padding:8px 4px; font-weight:700; font-size:.86rem}
+.pill small{display:block; font-weight:600; font-size:.62rem; letter-spacing:.08em; opacity:.75}
+.pill.yes{background:var(--accent-soft); color:var(--accent)}
+.pill.no{background:var(--no-soft); color:var(--no)}
+.vol{font-family:"Spline Sans Mono",monospace; font-size:.66rem; color:var(--muted); margin-top:8px}
+.nav{display:grid; grid-template-columns:1fr 1fr 1fr; border-top:1px solid var(--line); background:var(--card)}
+.nav a{text-align:center; padding:12px 0 14px; font-size:.72rem; font-weight:700; color:var(--muted); text-decoration:none}
+.nav a.on{color:var(--accent)}
+.nav a i{display:block; font-style:normal; font-size:1.05rem; margin-bottom:2px}
+.back{display:inline-block; margin:14px 18px 0; font-size:.8rem; color:var(--muted); text-decoration:none}
+.detail{padding:6px 18px 20px; flex:1}
+.detail h2{font-size:1.25rem; line-height:1.25; margin:6px 0 4px; letter-spacing:-.01em}
+.source{font-size:.74rem; color:var(--muted); margin-bottom:14px}
+.bigprice{display:flex; gap:10px; margin:12px 0}
+.bigprice .pill{padding:14px 4px; font-size:1.5rem; border-radius:12px}
+.toggle{font-family:"Spline Sans Mono",monospace; font-size:.68rem; color:var(--muted); text-align:right; margin:-4px 0 8px}
+.chart{border:1px solid var(--line); border-radius:12px; background:var(--card); padding:10px; margin-bottom:14px}
+.slip{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px}
+.slip h4{margin:0 0 10px; font-size:.8rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)}
+.side{display:flex; gap:8px; margin-bottom:10px}
+.side button{flex:1; border-radius:10px; border:1.5px solid var(--line); background:transparent; padding:10px; font-weight:800; font-size:.95rem; font-family:inherit; color:var(--muted)}
+.side button.on{border-color:var(--accent); background:var(--accent-soft); color:var(--accent)}
+.stake{display:flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:10px; padding:10px 12px; margin-bottom:10px}
+.stake input{border:none; outline:none; background:none; font-family:"Spline Sans Mono",monospace; font-size:1.05rem; width:100%; color:var(--ink)}
+.calc{font-size:.8rem; color:var(--muted); display:flex; justify-content:space-between; margin-bottom:4px}
+.calc b{color:var(--ink); font-family:"Spline Sans Mono",monospace}
+.cta{display:block; width:100%; border:none; border-radius:12px; background:var(--accent); color:#fff; font-weight:800; font-size:1rem; padding:14px; margin-top:10px; font-family:inherit; text-align:center; text-decoration:none}
+.note{font-size:.7rem; color:var(--muted); margin-top:8px; text-align:center}
+.rules{margin-top:14px; font-size:.78rem; color:var(--muted); background:var(--chip); border-radius:10px; padding:12px}
+.rules b{color:var(--ink)}
+.pos{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:13px 14px; margin-bottom:10px}
+.pos h3{margin:0 0 6px; font-size:.88rem}
+.pos .meta{font-family:"Spline Sans Mono",monospace; font-size:.7rem; color:var(--muted)}
+.gain{color:var(--accent); font-weight:700}
+.loss{color:var(--no); font-weight:700}
+.cashout{float:right; font-size:.72rem; font-weight:700; color:var(--accent); border:1.5px solid var(--accent); border-radius:999px; padding:4px 12px; text-decoration:none}
+.wsec{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px; margin-bottom:12px}
+.wsec h4{margin:0 0 8px; font-size:.8rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)}
+.locked{opacity:.65; position:relative; border-style:dashed}
+.lock-tag{font-family:"Spline Sans Mono",monospace; font-size:.6rem; font-weight:600; letter-spacing:.1em; color:var(--no); float:right}
+.tx{display:flex; justify-content:space-between; font-size:.8rem; padding:7px 0; border-bottom:1px solid var(--line)}
+.tx:last-child{border:none}
+.tx span:last-child{font-family:"Spline Sans Mono",monospace}
+
+
+.web{max-width:1060px; margin:30px auto; background:var(--screen); border:1px solid var(--line); border-radius:14px; overflow:hidden; box-shadow:0 12px 40px rgba(20,30,20,.08)}
+.wbar{display:flex; align-items:center; gap:8px; background:var(--chip); border-bottom:1px solid var(--line); padding:9px 14px}
+.dot{width:10px; height:10px; border-radius:50%; background:var(--line)}
+.url{font-family:"Spline Sans Mono",monospace; font-size:.72rem; color:var(--muted); background:var(--card); border:1px solid var(--line); border-radius:999px; padding:4px 14px; margin-left:10px}
+.wnav{display:flex; align-items:center; gap:14px; padding:14px 22px; border-bottom:1px solid var(--line)}
+.wnav .logo{font-size:1.25rem}
+.wnav .chips{padding:0; flex:1}
+.wgrid{display:grid; grid-template-columns:330px 1fr; gap:0; min-height:560px}
+.wlist{border-right:1px solid var(--line); padding:14px; display:flex; flex-direction:column; gap:10px; background:var(--ground)}
+.wlist h5{margin:2px 4px 0; font-size:.7rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+.wmain{padding:22px 26px}
+.wmain .source{margin-bottom:10px}
+.wcols{display:grid; grid-template-columns:1fr 300px; gap:20px; align-items:start}
+@media (max-width:900px){.wgrid{grid-template-columns:1fr}.wlist{border-right:none;border-bottom:1px solid var(--line)}.wcols{grid-template-columns:1fr}}
+
+
+/* ===== one-pager layout ===== */
+body{background:#EDEFE6}
+.hero{max-width:1080px; margin:0 auto; padding:56px 20px 8px; text-align:center}
+.eyebrow{font-family:"Spline Sans Mono",monospace; font-size:.72rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--accent)}
+.hero h1{font-size:clamp(2rem,5vw,3rem); font-weight:800; letter-spacing:-.02em; margin:10px 0 8px}
+.hero p{color:var(--muted); max-width:60ch; margin:0 auto}
+.sect{max-width:1120px; margin:70px auto 0; padding:0 20px}
+.sect>h2{font-size:1.45rem; font-weight:800; letter-spacing:-.01em; margin:6px 0 4px}
+.sect>.lead{color:var(--muted); margin:0 0 20px; max-width:70ch}
+.frames{display:flex; gap:30px; overflow-x:auto; padding:8px 4px 22px; align-items:flex-start}
+.framewrap{flex:0 0 372px}
+.framewrap .cap{margin:0 0 12px}
+.framewrap .cap .n{font-family:"Spline Sans Mono",monospace; font-size:.72rem; font-weight:600; color:var(--accent)}
+.framewrap .cap b{display:block; font-size:.95rem}
+.framewrap .cap small{color:var(--muted); font-size:.78rem; line-height:1.4; display:block; margin-top:2px}
+.phone{margin:0; min-height:730px; max-width:372px}
+.screen-label{display:none}
+.ogwrap{flex:0 0 560px}
+.og{margin:0}
+.web{margin:6px 0 0}
+figure.arch{margin:0; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 14px 6px; overflow-x:auto}
+figure.arch svg{display:block; min-width:760px; max-width:100%; height:auto; margin:0 auto}
+figure.arch svg text{font-family:"Schibsted Grotesk",Arial,sans-serif}
+figure.arch figcaption{font-size:.8rem; color:var(--muted); padding:10px 8px 8px; border-top:1px solid var(--line); margin-top:10px}
+.stack{display:grid; grid-template-columns:110px 1fr; gap:8px 14px; align-items:baseline; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px 20px; margin-top:18px}
+.stack dt{font-family:"Spline Sans Mono",monospace; font-size:.7rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin:0}
+.stack dd{margin:0; display:flex; flex-wrap:wrap; gap:6px}
+.schip{font-family:"Spline Sans Mono",monospace; font-size:.74rem; border:1px solid var(--line); background:var(--chip); border-radius:999px; padding:3px 11px; white-space:nowrap}
+.schip.hot{border-color:var(--accent); color:var(--accent); background:transparent}
+.weeks{display:grid; grid-template-columns:repeat(5,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:12px; overflow:hidden; margin-top:18px}
+.wk{background:var(--card); padding:13px 14px}
+.wk b{display:block; font-size:.86rem; margin:2px 0 3px}
+.wk .t{font-family:"Spline Sans Mono",monospace; font-size:.66rem; font-weight:600; letter-spacing:.1em; color:var(--accent)}
+.wk p{margin:0; font-size:.76rem; color:var(--muted); line-height:1.45}
+@media (max-width:720px){.weeks{grid-template-columns:1fr 1fr}.stack{grid-template-columns:1fr}}
+.pfoot{max-width:1080px; margin:70px auto 0; padding:20px; border-top:1px solid var(--line); font-size:.8rem; color:var(--muted); text-align:center}
+
 </style></head><body>
-<div class="idx">
-  <h1>Utabiri — placeholder screens</h1>
-  <p class="lead">Static HTML mockups of the MVP flow (play-money beta framing). Open in order — every screen links to the next; bottom nav works across screens. Clone the repo and open <span class="mono">mockups/home.html</span>, or click through the files below on GitHub.</p>
-  <div class="flow">
-    <a class="step" href="home.html"><span class="n">1</span><span><b>Soko — market feed</b><small>Categories (Siasa / Michezo / Uchumi), market cards with live % + decimal odds, volume. The daily-habit surface.</small></span></a>
-    <a class="step" href="market.html"><span class="n">2</span><span><b>Market detail + bet slip</b><small>The Ruto 2027 market: price chart, NDIYO/HAPANA slip, payout calc with spread, resolution source (IEBC) and rules up front, cash-out promise.</small></span></a>
-    <a class="step" href="portfolio.html"><span class="n">3</span><span><b>Portfolio</b><small>Open positions with live P&amp;L and one-tap cash-out (sell back to the market maker); resolved history with sources.</small></span></a>
-    <a class="step" href="wallet.html"><span class="n">4</span><span><b>Wallet</b><small>Play-money balance now; M-Pesa deposit/withdraw shown as licence-gated previews with the 5% excise and 5% WHT displayed honestly.</small></span></a>
-    <a class="step" href="share-card.html"><span class="n">5</span><span><b>Share card — the growth loop</b><small>The live-odds OG card that gets forwarded into WhatsApp/Telegram groups. Organic forwards replace (pre-approval-gated) advertising.</small></span></a>
+<div class="hero"><span class="eyebrow">Project Utabiri · public preview</span>
+<h1>uta<span style="color:var(--accent)">biri</span></h1>
+<p>Kenya-first prediction market — political outcomes, sports spreads and fast-resolving local markets, priced by an automated market maker, paid with M-Pesa, shared on WhatsApp/Telegram. Everything below is placeholder UI for the play-money beta.</p></div>
+<div class="sect"><span class="eyebrow">01</span><h2>Mobile app — the five screens</h2>
+<p class="lead">Telegram Mini App + PWA. Scroll sideways through the flow: feed → market → portfolio → wallet → share card.</p>
+<div class="frames">
+<div class="framewrap"><div class="cap"><span class="n">1 · SOKO</span><b>Market feed</b><small>Categories, live % + decimal odds, volume.</small></div>
+<div class="phone">
+  <div class="topbar"><div class="logo">uta<span>biri</span></div><div class="balance">UP 12,450</div></div>
+  <div class="beta">🎯 Beta ya pointi — Utabiri Points only, hakuna pesa halisi bado</div>
+  <div class="chips">
+    <a class="chip on" href="#">Zote</a><a class="chip" href="#">Siasa</a><a class="chip" href="#">Michezo</a><a class="chip" href="#">Uchumi</a><a class="chip" href="#">Burudani</a>
+  </div>
+  <div class="feed">
+    <a class="mcard" href="#">
+      <span class="tag">SIASA · RESOLVES AUG 2027</span>
+      <h3>Will Ruto win the 2027 presidential election?</h3>
+      <div class="row"><span class="pill yes">34%<small>NDIYO · 2.94</small></span><span class="pill no">66%<small>HAPANA · 1.52</small></span></div>
+      <div class="vol">▲ +2 leo · UP 4.2M traded · 1,204 wanabiri</div>
+    </a>
+    <a class="mcard" href="#">
+      <span class="tag">SIASA · RESOLVES FEB 2027</span>
+      <h3>Will the United Opposition field a single candidate?</h3>
+      <div class="row"><span class="pill yes">41%<small>NDIYO · 2.44</small></span><span class="pill no">59%<small>HAPANA · 1.69</small></span></div>
+      <div class="vol">▼ −3 leo · UP 1.1M traded</div>
+    </a>
+    <a class="mcard" href="#">
+      <span class="tag">MICHEZO · RESOLVES MAY 2027</span>
+      <h3>Arsenal wins the Premier League by 3+ points?</h3>
+      <div class="row"><span class="pill yes">22%<small>YES · 4.55</small></span><span class="pill no">78%<small>NO · 1.28</small></span></div>
+      <div class="vol">▲ +5 leo · UP 2.8M traded</div>
+    </a>
+    <a class="mcard" href="#">
+      <span class="tag">UCHUMI · RESOLVES 14 OCT 2026</span>
+      <h3>Petrol (Nairobi) above KES 190/L in October EPRA review?</h3>
+      <div class="row"><span class="pill yes">57%<small>NDIYO · 1.75</small></span><span class="pill no">43%<small>HAPANA · 2.33</small></span></div>
+      <div class="vol">▲ +1 leo · UP 640K traded · resolves in 43 days</div>
+    </a>
+    <a class="mcard" href="#">
+      <span class="tag">UCHUMI · RESOLVES 6 OCT 2026</span>
+      <h3>CBK holds the base rate at the October MPC meeting?</h3>
+      <div class="row"><span class="pill yes">71%<small>NDIYO · 1.41</small></span><span class="pill no">29%<small>HAPANA · 3.45</small></span></div>
+      <div class="vol">— leo · UP 310K traded · resolves in 35 days</div>
+    </a>
+  </div>
+  <div class="nav">
+    <a class="on" href="#"><i>📊</i>Soko</a>
+    <a href="#"><i>💼</i>Portfolio</a>
+    <a href="#"><i>👛</i>Wallet</a>
   </div>
 </div>
+</div>
+<div class="framewrap"><div class="cap"><span class="n">2 · MARKET</span><b>Detail + bet slip</b><small>Chart, NDIYO/HAPANA slip, payout calc, source + rules.</small></div>
+<div class="phone">
+  <a class="back" href="#">← Soko</a>
+  <div class="detail">
+    <span class="tag mono" style="color:var(--accent); font-size:.62rem; letter-spacing:.1em">SIASA · MARKET #001</span>
+    <h2>Will Ruto win the 2027 presidential election?</h2>
+    <p class="source">Chanzo cha matokeo: <b>IEBC official declaration</b> · resolves by 24 Aug 2027 · dispute window 48h</p>
+    <div class="bigprice">
+      <span class="pill yes">34%<small>NDIYO</small></span>
+      <span class="pill no">66%<small>HAPANA</small></span>
+    </div>
+    <div class="toggle">show as: <b>%</b> / odds</div>
+    <div class="chart">
+      <svg viewBox="0 0 320 90" style="display:block;width:100%;height:auto" role="img" aria-label="Price history: YES probability drifting from 45% to 34% over three months">
+        <polyline points="0,38 30,40 60,36 90,44 120,48 150,46 180,52 210,50 240,56 270,54 300,58 320,59" fill="none" stroke="#0E7B4C" stroke-width="2"/>
+        <line x1="0" y1="45" x2="320" y2="45" stroke="#DCE0D2" stroke-dasharray="4 4"/>
+        <text x="4" y="14" font-size="9" fill="#5C685D" font-family="monospace">JUN 45% → SEP 34%</text>
+      </svg>
+    </div>
+    <div class="slip">
+      <h4>Weka utabiri wako</h4>
+      <div class="side"><button class="on">NDIYO · 34%</button><button>HAPANA · 66%</button></div>
+      <div class="stake"><span class="mono" style="color:var(--muted);font-size:.8rem">UP</span><input value="500" inputmode="numeric"></div>
+      <div class="calc"><span>Ukishinda unapata</span><b>UP 1,441</b></div>
+      <div class="calc"><span>Bei ya sasa (incl. ~4% spread)</span><b>34.7¢ / share</b></div>
+      <a class="cta" href="#">Weka Utabiri →</a>
+      <p class="note">Unaweza ku-cash-out wakati wowote kabla ya matokeo</p>
+    </div>
+    <div class="rules">
+      <b>Sheria za soko:</b> Resolves NDIYO if the IEBC declares William Ruto president-elect in the 2027 general election (including any run-off). Court-annulled &amp; re-run → follows the final valid declaration. Market suspends on election day per GRA direction.
+    </div>
+  </div>
+  <div class="nav">
+    <a href="#"><i>📊</i>Soko</a>
+    <a href="#"><i>💼</i>Portfolio</a>
+    <a href="#"><i>👛</i>Wallet</a>
+  </div>
+</div>
+</div>
+<div class="framewrap"><div class="cap"><span class="n">3 · PORTFOLIO</span><b>Positions + cash-out</b><small>Live P&L, one-tap cash-out, resolved history.</small></div>
+<div class="phone">
+  <div class="topbar"><div class="logo">uta<span>biri</span></div><div class="balance">UP 12,450</div></div>
+  <div class="detail">
+    <h2 style="font-size:1.05rem">Positions zako</h2>
+    <p class="source">Open value <b class="mono">UP 1,730</b> · unrealized <span class="gain">+UP 156 (+9.9%)</span></p>
+    <div class="pos">
+      <a class="cashout" href="#">Cash out UP 545</a>
+      <h3>Ruto wins 2027 — <span style="color:var(--accent)">NDIYO</span></h3>
+      <div class="meta">500 UP @ 31% → now 34% · <span class="gain">+9.7%</span></div>
+    </div>
+    <div class="pos">
+      <a class="cashout" href="#">Cash out UP 610</a>
+      <h3>Arsenal wins EPL by 3+ — <span style="color:var(--no)">NO</span></h3>
+      <div class="meta">600 UP @ 74% → now 78% · <span class="gain">+5.4%</span></div>
+    </div>
+    <div class="pos">
+      <a class="cashout" href="#">Cash out UP 505</a>
+      <h3>Petrol &gt; KES 190/L Oct — <span style="color:var(--accent)">NDIYO</span></h3>
+      <div class="meta">550 UP @ 59% → now 57% · <span class="loss">−3.4%</span></div>
+    </div>
+    <h2 style="font-size:1.05rem; margin-top:18px">Zilizotatuliwa</h2>
+    <div class="pos" style="opacity:.75">
+      <h3>Kasarani by-election: UDA holds seat — NDIYO ✓</h3>
+      <div class="meta">Resolved 22 Aug · source: IEBC · <span class="gain">WON +UP 180</span></div>
+    </div>
+    <div class="pos" style="opacity:.75">
+      <h3>CBK cuts rate in August — NDIYO ✗</h3>
+      <div class="meta">Resolved 12 Aug · source: CBK MPC statement · <span class="loss">LOST −UP 250</span></div>
+    </div>
+  </div>
+  <div class="nav">
+    <a href="#"><i>📊</i>Soko</a>
+    <a class="on" href="#"><i>💼</i>Portfolio</a>
+    <a href="#"><i>👛</i>Wallet</a>
+  </div>
+</div>
+</div>
+<div class="framewrap"><div class="cap"><span class="n">4 · WALLET</span><b>Play-money now</b><small>M-Pesa previews with 5%/5% taxes shown honestly.</small></div>
+<div class="phone">
+  <div class="topbar"><div class="logo">uta<span>biri</span></div><div class="balance">UP 12,450</div></div>
+  <div class="detail">
+    <div class="wsec">
+      <h4>Salio lako (beta)</h4>
+      <div style="font-size:1.9rem; font-weight:800" class="mono">UP 12,450</div>
+      <p class="note" style="text-align:left; margin-top:4px">Utabiri Points — weekly top-up + leaderboard prizes. Hakuna pesa halisi kwenye beta.</p>
+    </div>
+    <div class="wsec locked">
+      <span class="lock-tag">LICENCE-GATED</span>
+      <h4>Deposit via M-Pesa (preview)</h4>
+      <div class="stake"><span class="mono" style="color:var(--muted);font-size:.8rem">KES</span><input value="500" disabled></div>
+      <div class="calc"><span>Excise duty 5% (KRA, on deposit)</span><b>−25</b></div>
+      <div class="calc"><span>Inaingia kwenye wallet</span><b>KES 475</b></div>
+      <button class="cta" disabled style="opacity:.7">Lipa na M-PESA (STK Push)</button>
+    </div>
+    <div class="wsec locked">
+      <span class="lock-tag">LICENCE-GATED</span>
+      <h4>Withdraw to M-Pesa (preview)</h4>
+      <div class="calc"><span>Unatoa</span><b>KES 1,000</b></div>
+      <div class="calc"><span>Withholding tax 5% (KRA, on withdrawal)</span><b>−50</b></div>
+      <div class="calc"><span>M-Pesa inapokea (B2C, ~30s)</span><b>KES 950</b></div>
+      <p class="note" style="text-align:left">Taxes shown upfront, kila mara — hakuna surprises.</p>
+    </div>
+    <div class="wsec">
+      <h4>Transactions</h4>
+      <div class="tx"><span>Cash-out · Kasarani by-election</span><span class="gain">+UP 680</span></div>
+      <div class="tx"><span>Weka · Ruto 2027 NDIYO</span><span>−UP 500</span></div>
+      <div class="tx"><span>Weekly top-up</span><span class="gain">+UP 1,000</span></div>
+      <div class="tx"><span>Won · UDA holds seat</span><span class="gain">+UP 180</span></div>
+    </div>
+  </div>
+  <div class="nav">
+    <a href="#"><i>📊</i>Soko</a>
+    <a href="#"><i>💼</i>Portfolio</a>
+    <a class="on" href="#"><i>👛</i>Wallet</a>
+  </div>
+</div>
+</div>
+<div class="framewrap ogwrap"><div class="cap"><span class="n">5 · SHARE CARD</span><b>The growth loop</b><small>Live-odds card built for the WhatsApp forward.</small></div>
+<div class="og">
+  <span class="k">SIASA · UTABIRI WA LEO · 01 SEP 2026</span>
+  <h2>Ruto kushinda urais 2027?</h2>
+  <div class="odds">
+    <div class="o y"><b>34%</b><small>NDIYO · ▲ +2 leo</small></div>
+    <div class="o n"><b>66%</b><small>HAPANA</small></div>
+  </div>
+  <div class="cta-line">
+    <span class="brand">uta<span>biri</span></span>
+    <span class="link">utabiri.co.ke/m/ruto-2027 →</span>
+  </div>
+</div>
+
+</div></div></div>
+<div class="sect"><span class="eyebrow">02</span><h2>Web version</h2>
+<p class="lead">Desktop layout — feed, market and bet slip on one screen. The web app is the canonical surface (and the MVP Ro raises on).</p>
+<div class="web">
+  <div class="wbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">utabiri.co.ke/m/ruto-2027</span></div>
+  <div class="wnav">
+    <div class="logo">uta<span>biri</span></div>
+    <div class="chips"><a class="chip on" href="#">Zote</a><a class="chip" href="#">Siasa</a><a class="chip" href="#">Michezo</a><a class="chip" href="#">Uchumi</a><a class="chip" href="#">Burudani</a></div>
+    <div class="balance">UP 12,450</div>
+  </div>
+  <div class="wgrid">
+    <aside class="wlist">
+      <h5>Masoko moto leo</h5>
+      <a class="mcard" href="#">
+        <span class="tag">SIASA</span><h3>Ruto wins the 2027 presidential election?</h3>
+        <div class="row"><span class="pill yes">34%<small>NDIYO</small></span><span class="pill no">66%<small>HAPANA</small></span></div>
+      </a>
+      <a class="mcard" href="#">
+        <span class="tag">SIASA</span><h3>United Opposition fields a single candidate?</h3>
+        <div class="row"><span class="pill yes">41%<small>NDIYO</small></span><span class="pill no">59%<small>HAPANA</small></span></div>
+      </a>
+      <a class="mcard" href="#">
+        <span class="tag">MICHEZO</span><h3>Arsenal wins the EPL by 3+ points?</h3>
+        <div class="row"><span class="pill yes">22%<small>YES</small></span><span class="pill no">78%<small>NO</small></span></div>
+      </a>
+      <a class="mcard" href="#">
+        <span class="tag">UCHUMI</span><h3>Petrol &gt; KES 190/L in October EPRA review?</h3>
+        <div class="row"><span class="pill yes">57%<small>NDIYO</small></span><span class="pill no">43%<small>HAPANA</small></span></div>
+      </a>
+    </aside>
+    <main class="wmain">
+      <span class="tag mono" style="color:var(--accent); font-size:.62rem; letter-spacing:.1em">SIASA · MARKET #001 · UP 4.2M TRADED</span>
+      <h2 style="font-size:1.5rem; letter-spacing:-.01em; margin:8px 0 4px">Will Ruto win the 2027 presidential election?</h2>
+      <p class="source">Chanzo cha matokeo: <b>IEBC official declaration</b> · resolves by 24 Aug 2027 · dispute window 48h · <a href="#" style="color:var(--accent)">resolution log</a></p>
+      <div class="wcols">
+        <div>
+          <div class="bigprice">
+            <span class="pill yes">34%<small>NDIYO · 2.94</small></span>
+            <span class="pill no">66%<small>HAPANA · 1.52</small></span>
+          </div>
+          <div class="chart">
+            <svg viewBox="0 0 480 130" style="display:block;width:100%;height:auto" role="img" aria-label="Price history June to September: YES probability falling from 45% to 34%">
+              <polyline points="0,55 40,58 80,52 120,63 160,69 200,66 240,75 280,72 320,80 360,78 420,84 480,86" fill="none" stroke="#0E7B4C" stroke-width="2.5"/>
+              <line x1="0" y1="65" x2="480" y2="65" stroke="#DCE0D2" stroke-dasharray="5 5"/>
+              <text x="6" y="18" font-size="11" fill="#5C685D" font-family="monospace">JUN 45% → SEP 34% · 1,204 wanabiri</text>
+            </svg>
+          </div>
+          <div class="rules"><b>Sheria za soko:</b> Resolves NDIYO if the IEBC declares William Ruto president-elect in the 2027 general election (including any run-off). Market suspends on election day per GRA direction.</div>
+        </div>
+        <div class="slip">
+          <h4>Weka utabiri wako</h4>
+          <div class="side"><button class="on">NDIYO · 34%</button><button>HAPANA</button></div>
+          <div class="stake"><span class="mono" style="color:var(--muted);font-size:.8rem">UP</span><input value="500" inputmode="numeric"></div>
+          <div class="calc"><span>Ukishinda unapata</span><b>UP 1,441</b></div>
+          <div class="calc"><span>Bei (incl. ~4% spread)</span><b>34.7¢</b></div>
+          <a class="cta" href="#">Weka Utabiri →</a>
+          <p class="note">Cash-out wakati wowote kabla ya matokeo</p>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+</div>
+<div class="sect"><span class="eyebrow">03</span><h2>MVP architecture</h2>
+<p class="lead">One TypeScript monolith, four modules, one Postgres. Play-money first — the flip to real KES swaps the wallet's funding source, not the architecture. Dashed = licence-gated or phase 2.</p>
+<figure class="arch">
+<svg viewBox="0 0 900 632" role="img" aria-label="Utabiri MVP architecture: Telegram Mini App, web PWA and WhatsApp bot clients call one API gateway, which fronts four modules — trading engine, wallet, market service and compliance — on a single Postgres and Redis layer, with M-Pesa, Smile ID, resolution sources and messaging as external services. M-Pesa is licence-gated; the wallet flips from play-money to real KES.">
+      <defs>
+        <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+          <polygon points="0,0 8,4 0,8" fill="currentColor"/>
+        </marker>
+      </defs>
+      <g stroke="currentColor" fill="none" stroke-width="1.3">
+        <!-- clients -->
+        <rect x="40" y="28" width="190" height="54" rx="7"/>
+        <rect x="250" y="28" width="190" height="54" rx="7"/>
+        <rect x="460" y="28" width="190" height="54" rx="7"/>
+        <rect x="670" y="28" width="190" height="54" rx="7" stroke-dasharray="5 4" opacity=".65"/>
+        <!-- client -> gateway -->
+        <line x1="135" y1="82" x2="135" y2="126" marker-end="url(#arr)"/>
+        <line x1="345" y1="82" x2="345" y2="126" marker-end="url(#arr)"/>
+        <line x1="555" y1="82" x2="555" y2="126" marker-end="url(#arr)"/>
+        <line x1="765" y1="82" x2="765" y2="126" marker-end="url(#arr)" stroke-dasharray="5 4" opacity=".65"/>
+        <!-- gateway -->
+        <rect x="40" y="130" width="820" height="42" rx="7"/>
+        <!-- gateway -> modules -->
+        <line x1="135" y1="172" x2="135" y2="214" marker-end="url(#arr)"/>
+        <line x1="345" y1="172" x2="345" y2="214" marker-end="url(#arr)"/>
+        <line x1="555" y1="172" x2="555" y2="214" marker-end="url(#arr)"/>
+        <line x1="765" y1="172" x2="765" y2="214" marker-end="url(#arr)"/>
+        <!-- modules -->
+        <rect x="40" y="218" width="190" height="126" rx="7"/>
+        <rect x="250" y="218" width="190" height="126" rx="7"/>
+        <rect x="460" y="218" width="190" height="126" rx="7"/>
+        <rect x="670" y="218" width="190" height="126" rx="7"/>
+        <!-- modules -> data -->
+        <line x1="135" y1="344" x2="135" y2="386" marker-end="url(#arr)"/>
+        <line x1="345" y1="344" x2="345" y2="386" marker-end="url(#arr)"/>
+        <line x1="555" y1="344" x2="555" y2="386" marker-end="url(#arr)"/>
+        <line x1="765" y1="344" x2="765" y2="386" marker-end="url(#arr)"/>
+        <!-- data bar -->
+        <rect x="40" y="390" width="820" height="50" rx="7"/>
+        <line x1="560" y1="390" x2="560" y2="440" opacity=".4"/>
+        <!-- externals container -->
+        <rect x="40" y="474" width="820" height="130" rx="9" stroke-dasharray="6 5" opacity=".45"/>
+        <rect x="56" y="492" width="188" height="98" rx="7" stroke="var(--accent)"/>
+        <rect x="262" y="492" width="188" height="98" rx="7"/>
+        <rect x="468" y="492" width="188" height="98" rx="7"/>
+        <rect x="674" y="492" width="188" height="98" rx="7"/>
+      </g>
+      <g fill="currentColor">
+        <!-- clients text -->
+        <text x="135" y="50" text-anchor="middle" font-size="13.5" font-weight="700">Telegram Mini App</text>
+        <text x="135" y="68" text-anchor="middle" font-size="11" opacity=".62">in the sharing channel itself</text>
+        <text x="345" y="50" text-anchor="middle" font-size="13.5" font-weight="700">Web PWA</text>
+        <text x="345" y="68" text-anchor="middle" font-size="11" opacity=".62">canonical, linkable surface</text>
+        <text x="555" y="50" text-anchor="middle" font-size="13.5" font-weight="700">WhatsApp bot</text>
+        <text x="555" y="68" text-anchor="middle" font-size="11" opacity=".62">prices, alerts, deep links</text>
+        <text x="765" y="50" text-anchor="middle" font-size="13.5" font-weight="700" opacity=".75">Partner odds API</text>
+        <text x="765" y="68" text-anchor="middle" font-size="11" opacity=".55">phase 2 · M-PESA mini app</text>
+        <!-- gateway text -->
+        <text x="450" y="156" text-anchor="middle" font-size="13.5" font-weight="700">API gateway · REST + WebSocket · one deployable (modular monolith)</text>
+        <!-- module: trading -->
+        <text x="52" y="240" font-size="13.5" font-weight="700">Trading engine</text>
+        <text x="52" y="261" font-size="11.5" opacity=".72">LMSR market maker</text>
+        <text x="52" y="277" font-size="11.5" opacity=".72">house-seeded, bounded loss</text>
+        <text x="52" y="293" font-size="11.5" opacity=".72">buy / sell-back = cash-out</text>
+        <text x="52" y="309" font-size="11.5" opacity=".72">% and decimal-odds prices</text>
+        <text x="52" y="325" font-size="11.5" opacity=".72">trades serialized per market</text>
+        <!-- module: wallet -->
+        <text x="262" y="240" font-size="13.5" font-weight="700">Wallet</text>
+        <text x="262" y="261" font-size="11.5" opacity=".72">double-entry ledger</text>
+        <text x="262" y="277" font-size="11.5" opacity=".72">integer KES cents, no floats</text>
+        <text x="262" y="293" font-size="11.5" opacity=".72">tax engine: 5% in · 5% out</text>
+        <text x="262" y="317" font-size="11" font-weight="600" class="mono" fill="var(--accent)">PLAY-MONEY → REAL KES</text>
+        <text x="262" y="331" font-size="10.5" opacity=".6">flip = funding source only</text>
+        <!-- module: market -->
+        <text x="472" y="240" font-size="13.5" font-weight="700">Market service</text>
+        <text x="472" y="261" font-size="11.5" opacity=".72">curated markets, no UGC</text>
+        <text x="472" y="277" font-size="11.5" opacity=".72">2-of-3 resolution council</text>
+        <text x="472" y="293" font-size="11.5" opacity=".72">public log + dispute window</text>
+        <text x="472" y="309" font-size="11.5" opacity=".72">election circuit breaker</text>
+        <text x="472" y="325" font-size="11.5" opacity=".72">share cards (live-odds OG)</text>
+        <!-- module: compliance -->
+        <text x="682" y="240" font-size="13.5" font-weight="700">Compliance</text>
+        <text x="682" y="261" font-size="11.5" opacity=".72">KYC · 18+ · min bet KES 20</text>
+        <text x="682" y="277" font-size="11.5" opacity=".72">limits, self-exclusion</text>
+        <text x="682" y="293" font-size="11.5" opacity=".72">append-only audit trail</text>
+        <text x="682" y="309" font-size="11.5" opacity=".72">GRA real-time feed</text>
+        <!-- data text -->
+        <text x="60" y="411" font-size="13" font-weight="700">PostgreSQL</text>
+        <text x="60" y="428" font-size="11" opacity=".62">single primary · ledger + markets + audit</text>
+        <text x="580" y="411" font-size="13" font-weight="700">Redis</text>
+        <text x="580" y="428" font-size="11" opacity=".62">queues · cache · live price feed</text>
+        <!-- externals -->
+        <text x="56" y="466" font-size="10" letter-spacing="2" class="mono" opacity=".55">EXTERNAL SERVICES · CALLED BY MODULES</text>
+        <text x="150" y="514" text-anchor="middle" font-size="12.5" font-weight="700">M-Pesa Daraja</text>
+        <text x="150" y="532" text-anchor="middle" font-size="11" opacity=".72">STK Push in · B2C out</text>
+        <text x="150" y="548" text-anchor="middle" font-size="10.5" class="mono" fill="var(--accent)">LICENCE-GATED</text>
+        <text x="150" y="574" text-anchor="middle" font-size="10.5" class="mono" opacity=".55">→ WALLET</text>
+        <text x="356" y="514" text-anchor="middle" font-size="12.5" font-weight="700">Smile ID</text>
+        <text x="356" y="532" text-anchor="middle" font-size="11" opacity=".72">pan-African ID verification</text>
+        <text x="356" y="574" text-anchor="middle" font-size="10.5" class="mono" opacity=".55">→ COMPLIANCE</text>
+        <text x="562" y="514" text-anchor="middle" font-size="12.5" font-weight="700">Resolution sources</text>
+        <text x="562" y="532" text-anchor="middle" font-size="11" opacity=".72">IEBC · CBK · EPRA</text>
+        <text x="562" y="548" text-anchor="middle" font-size="11" opacity=".72">official league tables</text>
+        <text x="562" y="574" text-anchor="middle" font-size="10.5" class="mono" opacity=".55">→ MARKET SERVICE</text>
+        <text x="768" y="514" text-anchor="middle" font-size="12.5" font-weight="700">Messaging</text>
+        <text x="768" y="532" text-anchor="middle" font-size="11" opacity=".72">Telegram · WhatsApp Cloud</text>
+        <text x="768" y="548" text-anchor="middle" font-size="11" opacity=".72">Africa's Talking SMS</text>
+        <text x="768" y="574" text-anchor="middle" font-size="10.5" class="mono" opacity=".55">→ ALERTS + SHARE LOOP</text>
+      </g>
+    </svg>
+<figcaption>Every client speaks to one gateway; four modules share one Postgres. M-Pesa integration is legally gated on the GRA licence — the play-money beta runs the identical stack without it.</figcaption></figure>
+<dl class="stack">
+    <dt>Backend</dt><dd><span class="schip">TypeScript</span><span class="schip">Node</span><span class="schip">Fastify / NestJS</span><span class="schip">decimal.js for LMSR</span></dd>
+    <dt>Data</dt><dd><span class="schip">PostgreSQL (managed)</span><span class="schip">Redis</span></dd>
+    <dt>Frontend</dt><dd><span class="schip">React</span><span class="schip">Vite</span><span class="schip">Tailwind</span><span class="schip">@telegram-apps SDK</span><span class="schip">one codebase, two surfaces</span></dd>
+    <dt>Payments</dt><dd><span class="schip hot">Daraja STK Push + B2C</span><span class="schip">IntaSend / Flutterwave (faster start)</span><span class="schip">Airtel Money later</span></dd>
+    <dt>KYC</dt><dd><span class="schip">Smile ID</span></dd>
+    <dt>Messaging</dt><dd><span class="schip">Telegram Bot API</span><span class="schip">WhatsApp Cloud API</span><span class="schip">Africa's Talking SMS</span></dd>
+    <dt>Infra</dt><dd><span class="schip">AWS af-south-1</span><span class="schip">Docker</span><span class="schip">Cloudflare</span><span class="schip">Sentry</span></dd>
+  </dl>
+<span class="eyebrow" style="display:block;margin-top:26px">04</span><h2>Build sequence · 8–10 weeks to the beta</h2>
+<div class="weeks">
+    <div class="wk"><span class="t">W1–2</span><b>Money core</b><p>Ledger, wallet, tax engine; Daraja in sandbox only</p></div>
+    <div class="wk"><span class="t">W3–4</span><b>Trading engine</b><p>LMSR, positions, cash-out, admin market creation</p></div>
+    <div class="wk"><span class="t">W5–6</span><b>Clients</b><p>PWA + Telegram Mini App from one React codebase</p></div>
+    <div class="wk"><span class="t">W7–8</span><b>Trust</b><p>KYC, limits, resolution console, public log, audit</p></div>
+    <div class="wk"><span class="t">W9–10</span><b>Growth loop</b><p>Share cards, WhatsApp bot, 5–10 launch markets</p></div>
+  </div>
+</div>
+<div class="pfoot">Placeholder screens &amp; architecture, Sep 2026 · single-page preview · individual screens: <a href="home.html">feed</a> · <a href="market.html">market</a> · <a href="portfolio.html">portfolio</a> · <a href="wallet.html">wallet</a> · <a href="share-card.html">share card</a> · <a href="web.html">web</a></div>
 </body></html>
