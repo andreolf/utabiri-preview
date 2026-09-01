@@ -141,6 +141,18 @@ figure.arch figcaption{font-size:.8rem; color:var(--muted); padding:10px 8px 8px
 .wk p{margin:0; font-size:.76rem; color:var(--muted); line-height:1.45}
 @media (max-width:720px){.weeks{grid-template-columns:1fr 1fr}.stack{grid-template-columns:1fr}}
 .pfoot{max-width:1080px; margin:70px auto 0; padding:20px; border-top:1px solid var(--line); font-size:.8rem; color:var(--muted); text-align:center}
+.cmpwrap{overflow-x:auto; background:var(--card); border:1px solid var(--line); border-radius:12px; margin-top:18px}
+.cmp{border-collapse:collapse; width:100%; min-width:860px; font-size:.8rem; line-height:1.45}
+.cmp th{font-family:"Spline Sans Mono",monospace; font-size:.66rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; text-align:left; color:var(--muted); border-bottom:1px solid var(--line); padding:11px 12px; white-space:nowrap}
+.cmp td{padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:top}
+.cmp tr:last-child td{border-bottom:none}
+.cmp td:first-child{font-weight:700; font-size:.78rem; white-space:nowrap}
+.cmp th.u, .cmp td.u{background:var(--accent-soft)}
+.cmp th.u{color:var(--accent)}
+.ok{color:var(--accent); font-weight:700}
+.no{color:var(--no); font-weight:700}
+.mid{color:var(--muted)}
+.cmpnote{font-size:.74rem; color:var(--muted); margin-top:10px}
 
 </style></head><body>
 <div class="hero"><span class="eyebrow">Project Utabiri · public preview</span>
@@ -518,5 +530,35 @@ figure.arch figcaption{font-size:.8rem; color:var(--muted); padding:10px 8px 8px
     <div class="wk"><span class="t">W9–10</span><b>Growth loop</b><p>Share cards, WhatsApp bot, 5–10 launch markets</p></div>
   </div>
 </div>
+<div class="sect"><span class="eyebrow">05</span><h2>Competitive landscape — Africa</h2>
+<p class="lead">Nobody in Africa combines a licence-first path, M-Pesa, live tradeable prices and transparent resolution. That combination is the differentiation.</p>
+<div class="cmpwrap"><table class="cmp">
+<tr><th></th><th class="u">Utabiri (planned)</th><th>5050Markets 🇰🇪</th><th>Bayse / ex-Gowagr 🇳🇬</th><th>Luno predictions 🇳🇬🇿🇦</th><th>SportPesa / Betika 🇰🇪</th></tr>
+<tr><td>Licence status</td><td class="u"><span class="ok">✓</span> GRA licence-first (play-money until licensed)</td><td class="mid">unclear / none visible</td><td><span class="no">✗</span> listed illegal by Lagos regulator</td><td class="mid">crypto product, avoids gambling law</td><td><span class="ok">✓</span> licensed bookmakers</td></tr>
+<tr><td>Politics markets</td><td class="u"><span class="ok">✓</span> core product (2027 cycle)</td><td><span class="ok">✓</span></td><td><span class="ok">✓</span></td><td><span class="no">✗</span> crypto prices only</td><td><span class="no">✗</span> sports only</td></tr>
+<tr><td>M-Pesa native</td><td class="u"><span class="ok">✓</span> STK Push + B2C</td><td><span class="ok">✓</span></td><td><span class="no">✗</span> bank transfer + USDT</td><td><span class="no">✗</span></td><td><span class="ok">✓</span></td></tr>
+<tr><td>Live tradeable prices</td><td class="u"><span class="ok">✓</span> AMM — always a price, any size</td><td class="mid">limited, thin</td><td class="mid">P2P matching (needs counterparty)</td><td class="mid">fixed binary payout</td><td><span class="no">✗</span> fixed odds, house-set</td></tr>
+<tr><td>Cash-out before resolution</td><td class="u"><span class="ok">✓</span> sell back anytime</td><td class="mid">unclear</td><td><span class="ok">✓</span> early exit</td><td><span class="no">✗</span></td><td class="mid">partial (some sports)</td></tr>
+<tr><td>Public resolution rules + log</td><td class="u"><span class="ok">✓</span> pre-declared sources, dispute window</td><td><span class="no">✗</span> undocumented</td><td class="mid">disputed (manipulation allegation)</td><td><span class="ok">✓</span> price feeds (automatic)</td><td class="mid">n/a (scores)</td></tr>
+<tr><td>Taxes shown upfront</td><td class="u"><span class="ok">✓</span> 5%/5% displayed on every flow</td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span> buried in odds</td></tr>
+<tr><td>Telegram Mini App + share cards</td><td class="u"><span class="ok">✓</span> the distribution strategy</td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td class="mid">SMS/USSD heritage</td></tr>
+<tr><td>Partner / odds API</td><td class="u"><span class="ok">✓</span> phase 2 → telcos, betting platforms</td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td class="mid">closed</td></tr>
+</table></div>
+
+<span class="eyebrow" style="display:block;margin-top:34px">06</span><h2>Global benchmark</h2>
+<p class="lead">The playbook proven elsewhere, localized: every global CLOB needed paid market makers — a cold-start Kenyan market needs an AMM, mobile money and bookmaker-familiar pricing.</p>
+<div class="cmpwrap"><table class="cmp">
+<tr><th></th><th class="u">Utabiri (planned)</th><th>Polymarket</th><th>Kalshi</th><th>Betfair Exchange</th><th>Manifold</th></tr>
+<tr><td>Mechanism</td><td class="u">LMSR AMM, house-seeded (built for cold start)</td><td>CLOB + paid MMs (20% rebates)</td><td>CLOB + Susquehanna + subsidies</td><td>P2P odds exchange</td><td>CPMM + limit orders</td></tr>
+<tr><td>Money rail</td><td class="u">KES via M-Pesa (stablecoins phase 2)</td><td>USDC on Polygon</td><td>USD bank/debit</td><td>fiat wallets</td><td>play money</td></tr>
+<tr><td>Regulation</td><td class="u">Kenya GRA bookmaker path</td><td>offshore + US CFTC DCM (QCX)</td><td>CFTC DCM, fighting 20+ states</td><td>gambling licences</td><td>none needed</td></tr>
+<tr><td>Africa access</td><td class="u"><span class="ok">✓</span> built for Kenya</td><td class="mid">gray-market via crypto</td><td><span class="no">✗</span> geo-blocked</td><td><span class="no">✗</span> no mobile money</td><td class="mid">play only</td></tr>
+<tr><td>Min stake</td><td class="u">KES 20 (~$0.15)</td><td>~$1</td><td>$1 contracts</td><td>~£1–2</td><td>free</td></tr>
+<tr><td>Fees</td><td class="u">~4% spread + commission on winnings</td><td>taker fees (~1–1.75%/share)</td><td>0.07·P·(1−P) taker</td><td>2–5% on net winnings</td><td>none</td></tr>
+<tr><td>Distribution</td><td class="u">WhatsApp/Telegram forwards + telco API</td><td>social embeds, API bots</td><td>Robinhood / Webull order flow</td><td>pro traders, API</td><td>community</td></tr>
+</table></div>
+<p class="cmpnote">Utabiri column reflects the MVP plan, not a live product. Competitor facts compiled Sep 2026 from public sources.</p>
+</div>
+
 <div class="pfoot">Placeholder screens &amp; architecture, Sep 2026 · single-page preview · individual screens: <a href="home.html">feed</a> · <a href="market.html">market</a> · <a href="portfolio.html">portfolio</a> · <a href="wallet.html">wallet</a> · <a href="share-card.html">share card</a> · <a href="web.html">web</a></div>
 </body></html>
