@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Utabiri — Mockup flow index</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Spline+Sans+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="style.css">
+<style>
+  .idx{max-width:640px; margin:40px auto; padding:0 20px}
+  .idx h1{font-size:1.8rem; letter-spacing:-.02em; margin:0 0 6px}
+  .idx p.lead{color:var(--muted); margin:0 0 24px}
+  .flow{display:flex; flex-direction:column; gap:10px}
+  .step{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px 16px; text-decoration:none; color:inherit; display:grid; grid-template-columns:44px 1fr; gap:12px; align-items:start}
+  .step .n{font-family:"Spline Sans Mono",monospace; font-weight:600; color:var(--accent); font-size:.8rem; padding-top:2px}
+  .step b{display:block; margin-bottom:2px}
+  .step small{color:var(--muted); line-height:1.4}
+</style></head><body>
+<div class="idx">
+  <h1>Utabiri — placeholder screens</h1>
+  <p class="lead">Static HTML mockups of the MVP flow (play-money beta framing). Open in order — every screen links to the next; bottom nav works across screens. Clone the repo and open <span class="mono">mockups/home.html</span>, or click through the files below on GitHub.</p>
+  <div class="flow">
+    <a class="step" href="home.html"><span class="n">1</span><span><b>Soko — market feed</b><small>Categories (Siasa / Michezo / Uchumi), market cards with live % + decimal odds, volume. The daily-habit surface.</small></span></a>
+    <a class="step" href="market.html"><span class="n">2</span><span><b>Market detail + bet slip</b><small>The Ruto 2027 market: price chart, NDIYO/HAPANA slip, payout calc with spread, resolution source (IEBC) and rules up front, cash-out promise.</small></span></a>
+    <a class="step" href="portfolio.html"><span class="n">3</span><span><b>Portfolio</b><small>Open positions with live P&amp;L and one-tap cash-out (sell back to the market maker); resolved history with sources.</small></span></a>
+    <a class="step" href="wallet.html"><span class="n">4</span><span><b>Wallet</b><small>Play-money balance now; M-Pesa deposit/withdraw shown as licence-gated previews with the 5% excise and 5% WHT displayed honestly.</small></span></a>
+    <a class="step" href="share-card.html"><span class="n">5</span><span><b>Share card — the growth loop</b><small>The live-odds OG card that gets forwarded into WhatsApp/Telegram groups. Organic forwards replace (pre-approval-gated) advertising.</small></span></a>
+  </div>
+</div>
+</body></html>

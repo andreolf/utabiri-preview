@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Utabiri — Market detail (mockup)</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Spline+Sans+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="style.css"></head><body>
+<p class="screen-label">Screen 2 · market detail + bet slip</p>
+<div class="phone">
+  <a class="back" href="home.html">← Soko</a>
+  <div class="detail">
+    <span class="tag mono" style="color:var(--accent); font-size:.62rem; letter-spacing:.1em">SIASA · MARKET #001</span>
+    <h2>Will Ruto win the 2027 presidential election?</h2>
+    <p class="source">Chanzo cha matokeo: <b>IEBC official declaration</b> · resolves by 24 Aug 2027 · dispute window 48h</p>
+    <div class="bigprice">
+      <span class="pill yes">34%<small>NDIYO</small></span>
+      <span class="pill no">66%<small>HAPANA</small></span>
+    </div>
+    <div class="toggle">show as: <b>%</b> / odds</div>
+    <div class="chart">
+      <svg viewBox="0 0 320 90" style="display:block;width:100%;height:auto" role="img" aria-label="Price history: YES probability drifting from 45% to 34% over three months">
+        <polyline points="0,38 30,40 60,36 90,44 120,48 150,46 180,52 210,50 240,56 270,54 300,58 320,59" fill="none" stroke="#0E7B4C" stroke-width="2"/>
+        <line x1="0" y1="45" x2="320" y2="45" stroke="#DCE0D2" stroke-dasharray="4 4"/>
+        <text x="4" y="14" font-size="9" fill="#5C685D" font-family="monospace">JUN 45% → SEP 34%</text>
+      </svg>
+    </div>
+    <div class="slip">
+      <h4>Weka utabiri wako</h4>
+      <div class="side"><button class="on">NDIYO · 34%</button><button>HAPANA · 66%</button></div>
+      <div class="stake"><span class="mono" style="color:var(--muted);font-size:.8rem">UP</span><input value="500" inputmode="numeric"></div>
+      <div class="calc"><span>Ukishinda unapata</span><b>UP 1,441</b></div>
+      <div class="calc"><span>Bei ya sasa (incl. ~4% spread)</span><b>34.7¢ / share</b></div>
+      <a class="cta" href="portfolio.html">Weka Utabiri →</a>
+      <p class="note">Unaweza ku-cash-out wakati wowote kabla ya matokeo</p>
+    </div>
+    <div class="rules">
+      <b>Sheria za soko:</b> Resolves NDIYO if the IEBC declares William Ruto president-elect in the 2027 general election (including any run-off). Court-annulled &amp; re-run → follows the final valid declaration. Market suspends on election day per GRA direction.
+    </div>
+  </div>
+  <div class="nav">
+    <a href="home.html"><i>📊</i>Soko</a>
+    <a href="portfolio.html"><i>💼</i>Portfolio</a>
+    <a href="wallet.html"><i>👛</i>Wallet</a>
+  </div>
+</div>
+</body></html>

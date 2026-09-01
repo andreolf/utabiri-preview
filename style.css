@@ -1,0 +1,74 @@
+/* Utabiri mockups — shared styles (placeholder UI, play-money beta framing) */
+:root{
+  --ground:#F2F4EC; --screen:#FBFCF8; --ink:#1B231C; --muted:#5C685D;
+  --accent:#0E7B4C; --accent-soft:#E2F0E8; --no:#B0492F; --no-soft:#F6E7E1;
+  --line:#DCE0D2; --card:#FFFFFF; --chip:#EEF0E6;
+}
+*{box-sizing:border-box}
+body{margin:0; background:var(--ground); color:var(--ink);
+  font-family:"Schibsted Grotesk","Helvetica Neue",Arial,sans-serif; line-height:1.45}
+.mono{font-family:"Spline Sans Mono",ui-monospace,Menlo,monospace}
+.phone{max-width:400px; margin:24px auto; background:var(--screen); border:1px solid var(--line);
+  border-radius:26px; min-height:780px; display:flex; flex-direction:column; overflow:hidden;
+  box-shadow:0 12px 40px rgba(20,30,20,.08)}
+.screen-label{max-width:400px; margin:18px auto -14px; font-family:"Spline Sans Mono",monospace;
+  font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); text-align:center}
+.topbar{display:flex; align-items:center; justify-content:space-between; padding:16px 18px 10px}
+.logo{font-weight:800; font-size:1.15rem; letter-spacing:-.02em}
+.logo span{color:var(--accent)}
+.balance{font-family:"Spline Sans Mono",monospace; font-size:.78rem; font-weight:600;
+  background:var(--accent-soft); color:var(--accent); border-radius:999px; padding:5px 12px}
+.beta{margin:6px 18px 10px; font-size:.72rem; color:var(--muted); background:var(--chip);
+  border:1px dashed var(--line); border-radius:8px; padding:6px 10px; text-align:center}
+.chips{display:flex; gap:8px; padding:4px 18px 12px; overflow-x:auto}
+.chip{font-size:.78rem; font-weight:600; border:1px solid var(--line); border-radius:999px;
+  padding:5px 13px; white-space:nowrap; color:var(--muted); text-decoration:none}
+.chip.on{background:var(--ink); color:var(--screen); border-color:var(--ink)}
+.feed{padding:0 14px 20px; display:flex; flex-direction:column; gap:10px; flex:1}
+.mcard{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 14px 12px; text-decoration:none; color:inherit; display:block}
+.mcard .tag{font-family:"Spline Sans Mono",monospace; font-size:.62rem; font-weight:600; letter-spacing:.1em; color:var(--accent)}
+.mcard h3{margin:4px 0 10px; font-size:.95rem; line-height:1.3; font-weight:700}
+.row{display:flex; align-items:center; justify-content:space-between; gap:8px}
+.pill{flex:1; text-align:center; border-radius:9px; padding:8px 4px; font-weight:700; font-size:.86rem}
+.pill small{display:block; font-weight:600; font-size:.62rem; letter-spacing:.08em; opacity:.75}
+.pill.yes{background:var(--accent-soft); color:var(--accent)}
+.pill.no{background:var(--no-soft); color:var(--no)}
+.vol{font-family:"Spline Sans Mono",monospace; font-size:.66rem; color:var(--muted); margin-top:8px}
+.nav{display:grid; grid-template-columns:1fr 1fr 1fr; border-top:1px solid var(--line); background:var(--card)}
+.nav a{text-align:center; padding:12px 0 14px; font-size:.72rem; font-weight:700; color:var(--muted); text-decoration:none}
+.nav a.on{color:var(--accent)}
+.nav a i{display:block; font-style:normal; font-size:1.05rem; margin-bottom:2px}
+.back{display:inline-block; margin:14px 18px 0; font-size:.8rem; color:var(--muted); text-decoration:none}
+.detail{padding:6px 18px 20px; flex:1}
+.detail h2{font-size:1.25rem; line-height:1.25; margin:6px 0 4px; letter-spacing:-.01em}
+.source{font-size:.74rem; color:var(--muted); margin-bottom:14px}
+.bigprice{display:flex; gap:10px; margin:12px 0}
+.bigprice .pill{padding:14px 4px; font-size:1.5rem; border-radius:12px}
+.toggle{font-family:"Spline Sans Mono",monospace; font-size:.68rem; color:var(--muted); text-align:right; margin:-4px 0 8px}
+.chart{border:1px solid var(--line); border-radius:12px; background:var(--card); padding:10px; margin-bottom:14px}
+.slip{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px}
+.slip h4{margin:0 0 10px; font-size:.8rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)}
+.side{display:flex; gap:8px; margin-bottom:10px}
+.side button{flex:1; border-radius:10px; border:1.5px solid var(--line); background:transparent; padding:10px; font-weight:800; font-size:.95rem; font-family:inherit; color:var(--muted)}
+.side button.on{border-color:var(--accent); background:var(--accent-soft); color:var(--accent)}
+.stake{display:flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:10px; padding:10px 12px; margin-bottom:10px}
+.stake input{border:none; outline:none; background:none; font-family:"Spline Sans Mono",monospace; font-size:1.05rem; width:100%; color:var(--ink)}
+.calc{font-size:.8rem; color:var(--muted); display:flex; justify-content:space-between; margin-bottom:4px}
+.calc b{color:var(--ink); font-family:"Spline Sans Mono",monospace}
+.cta{display:block; width:100%; border:none; border-radius:12px; background:var(--accent); color:#fff; font-weight:800; font-size:1rem; padding:14px; margin-top:10px; font-family:inherit; text-align:center; text-decoration:none}
+.note{font-size:.7rem; color:var(--muted); margin-top:8px; text-align:center}
+.rules{margin-top:14px; font-size:.78rem; color:var(--muted); background:var(--chip); border-radius:10px; padding:12px}
+.rules b{color:var(--ink)}
+.pos{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:13px 14px; margin-bottom:10px}
+.pos h3{margin:0 0 6px; font-size:.88rem}
+.pos .meta{font-family:"Spline Sans Mono",monospace; font-size:.7rem; color:var(--muted)}
+.gain{color:var(--accent); font-weight:700}
+.loss{color:var(--no); font-weight:700}
+.cashout{float:right; font-size:.72rem; font-weight:700; color:var(--accent); border:1.5px solid var(--accent); border-radius:999px; padding:4px 12px; text-decoration:none}
+.wsec{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px; margin-bottom:12px}
+.wsec h4{margin:0 0 8px; font-size:.8rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)}
+.locked{opacity:.65; position:relative; border-style:dashed}
+.lock-tag{font-family:"Spline Sans Mono",monospace; font-size:.6rem; font-weight:600; letter-spacing:.1em; color:var(--no); float:right}
+.tx{display:flex; justify-content:space-between; font-size:.8rem; padding:7px 0; border-bottom:1px solid var(--line)}
+.tx:last-child{border:none}
+.tx span:last-child{font-family:"Spline Sans Mono",monospace}
