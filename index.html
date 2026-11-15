@@ -29,14 +29,18 @@ body{background:#EDEFE6}
 .sect>h2{font-size:1.45rem; font-weight:800; letter-spacing:-.01em; margin:6px 0 4px}
 .sect>.lead{color:var(--muted); margin:0 0 20px; max-width:70ch}
 .frames{display:flex; gap:30px; overflow-x:auto; padding:8px 4px 22px; align-items:flex-start}
-.framewrap{flex:0 0 372px}
+html{scroll-behavior:smooth}
+.frames{scroll-snap-type:x proximity}
+.framewrap{flex:0 0 min(372px, calc(100vw - 48px)); min-width:0; scroll-snap-align:start; scroll-margin-top:16px}
 .framewrap .cap{margin:0 0 12px}
 .framewrap .cap .n{font-family:"Spline Sans Mono",monospace; font-size:.72rem; font-weight:600; color:var(--accent)}
 .framewrap .cap b{display:block; font-size:.95rem}
 .framewrap .cap small{color:var(--muted); font-size:.78rem; line-height:1.4; display:block; margin-top:2px}
 .phone{margin:0; min-height:730px; max-width:372px}
 .screen-label{display:none}
-.ogwrap{flex:0 0 560px}
+.ogwrap{flex:0 0 min(560px, calc(100vw - 48px))}
+@media (max-width:620px){.og{padding:24px 22px}.og h2{font-size:1.35rem}.og .o b{font-size:1.6rem}.og .cta-line{flex-wrap:wrap; gap:8px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 .og{max-width:560px; margin:0; background:#0F3D27; color:#F2F7F1; border-radius:18px; padding:34px 36px}
 .og .k{font-family:"Spline Sans Mono",monospace; font-size:.68rem; letter-spacing:.14em; color:#7FD8AC}
 .og h2{font-size:1.7rem; line-height:1.2; margin:10px 0 22px; letter-spacing:-.01em; color:#fff}
@@ -86,7 +90,7 @@ figure.arch figcaption{font-size:.8rem; color:var(--muted); padding:10px 8px 8px
 <div class="sect"><span class="eyebrow">01</span><h2>Mobile app — the five screens</h2>
 <p class="lead">Telegram Mini App + PWA. Scroll sideways through the flow: feed → market → portfolio → wallet → share card.</p>
 <div class="frames">
-<div class="framewrap"><div class="cap"><span class="n">1 · SOKO</span><b>Market feed</b><small>Categories, live % + decimal odds, volume.</small></div>
+<div class="framewrap" id="s-soko"><div class="cap"><span class="n">1 · SOKO</span><b>Market feed</b><small>Categories, live % + decimal odds, volume.</small></div>
 <div class="phone">
   <div class="topbar"><div class="logo">uta<span>biri</span></div><div class="balance">UP 12,450</div></div>
   <div class="beta">🎯 Beta ya pointi — Utabiri Points only, hakuna pesa halisi bado</div>
@@ -94,31 +98,31 @@ figure.arch figcaption{font-size:.8rem; color:var(--muted); padding:10px 8px 8px
     <a class="chip on" href="#">Zote</a><a class="chip" href="#">Siasa</a><a class="chip" href="#">Michezo</a><a class="chip" href="#">Uchumi</a><a class="chip" href="#">Burudani</a>
   </div>
   <div class="feed">
-    <a class="mcard" href="#">
+    <a class="mcard" href="#s-market">
       <span class="tag">SIASA · RESOLVES AUG 2027</span>
       <h3>Will Ruto win the 2027 presidential election?</h3>
       <div class="row"><span class="pill yes">34%<small>NDIYO · 2.94</small></span><span class="pill no">66%<small>HAPANA · 1.52</small></span></div>
       <div class="vol">▲ +2 leo · UP 4.2M traded · 1,204 wanabiri</div>
     </a>
-    <a class="mcard" href="#">
+    <a class="mcard" href="#s-market">
       <span class="tag">SIASA · RESOLVES FEB 2027</span>
       <h3>Will the United Opposition field a single candidate?</h3>
       <div class="row"><span class="pill yes">41%<small>NDIYO · 2.44</small></span><span class="pill no">59%<small>HAPANA · 1.69</small></span></div>
       <div class="vol">▼ −3 leo · UP 1.1M traded</div>
     </a>
-    <a class="mcard" href="#">
+    <a class="mcard" href="#s-market">
       <span class="tag">MICHEZO · RESOLVES MAY 2027</span>
       <h3>Arsenal wins the Premier League by 3+ points?</h3>
       <div class="row"><span class="pill yes">22%<small>YES · 4.55</small></span><span class="pill no">78%<small>NO · 1.28</small></span></div>
       <div class="vol">▲ +5 leo · UP 2.8M traded</div>
     </a>
-    <a class="mcard" href="#">
+    <a class="mcard" href="#s-market">
       <span class="tag">UCHUMI · RESOLVES 14 DEC 2026</span>
       <h3>Petrol (Nairobi) above KES 190/L in December EPRA review?</h3>
       <div class="row"><span class="pill yes">57%<small>NDIYO · 1.75</small></span><span class="pill no">43%<small>HAPANA · 2.33</small></span></div>
       <div class="vol">▲ +1 leo · UP 640K traded · resolves in 29 days</div>
     </a>
-    <a class="mcard" href="#">
+    <a class="mcard" href="#s-market">
       <span class="tag">UCHUMI · RESOLVES 8 DEC 2026</span>
       <h3>CBK holds the base rate at the December MPC meeting?</h3>
       <div class="row"><span class="pill yes">71%<small>NDIYO · 1.41</small></span><span class="pill no">29%<small>HAPANA · 3.45</small></span></div>
@@ -126,15 +130,15 @@ figure.arch figcaption{font-size:.8rem; color:var(--muted); padding:10px 8px 8px
     </a>
   </div>
   <div class="nav">
-    <a class="on" href="#"><i>📊</i>Soko</a>
-    <a href="#"><i>💼</i>Portfolio</a>
-    <a href="#"><i>👛</i>Wallet</a>
+    <a class="on" href="#s-soko"><i>📊</i>Soko</a>
+    <a href="#s-portfolio"><i>💼</i>Portfolio</a>
+    <a href="#s-wallet"><i>👛</i>Wallet</a>
   </div>
 </div>
 </div>
-<div class="framewrap"><div class="cap"><span class="n">2 · MARKET</span><b>Detail + bet slip</b><small>Chart, NDIYO/HAPANA slip, payout calc, source + rules.</small></div>
+<div class="framewrap" id="s-market"><div class="cap"><span class="n">2 · MARKET</span><b>Detail + bet slip</b><small>Chart, NDIYO/HAPANA slip, payout calc, source + rules.</small></div>
 <div class="phone">
-  <a class="back" href="#">← Soko</a>
+  <a class="back" href="#s-soko">← Soko</a>
   <div class="detail">
     <span class="tag mono" style="color:var(--accent); font-size:.62rem; letter-spacing:.1em">SIASA · MARKET #001</span>
     <h2>Will Ruto win the 2027 presidential election?</h2>
@@ -157,7 +161,7 @@ figure.arch figcaption{font-size:.8rem; color:var(--muted); padding:10px 8px 8px
       <div class="stake"><span class="mono" style="color:var(--muted);font-size:.8rem">UP</span><input value="500" inputmode="numeric"></div>
       <div class="calc"><span>Ukishinda unapata</span><b>UP 1,441</b></div>
       <div class="calc"><span>Bei ya sasa (incl. ~4% spread)</span><b>34.7¢ / share</b></div>
-      <a class="cta" href="#">Weka Utabiri →</a>
+      <a class="cta" href="#s-portfolio">Weka Utabiri →</a>
       <p class="note">Unaweza ku-cash-out wakati wowote kabla ya matokeo</p>
     </div>
     <div class="rules">
@@ -165,13 +169,13 @@ figure.arch figcaption{font-size:.8rem; color:var(--muted); padding:10px 8px 8px
     </div>
   </div>
   <div class="nav">
-    <a href="#"><i>📊</i>Soko</a>
-    <a href="#"><i>💼</i>Portfolio</a>
-    <a href="#"><i>👛</i>Wallet</a>
+    <a href="#s-soko"><i>📊</i>Soko</a>
+    <a href="#s-portfolio"><i>💼</i>Portfolio</a>
+    <a href="#s-wallet"><i>👛</i>Wallet</a>
   </div>
 </div>
 </div>
-<div class="framewrap"><div class="cap"><span class="n">3 · PORTFOLIO</span><b>Positions + cash-out</b><small>Live P&L, one-tap cash-out, resolved history.</small></div>
+<div class="framewrap" id="s-portfolio"><div class="cap"><span class="n">3 · PORTFOLIO</span><b>Positions + cash-out</b><small>Live P&L, one-tap cash-out, resolved history.</small></div>
 <div class="phone">
   <div class="topbar"><div class="logo">uta<span>biri</span></div><div class="balance">UP 12,450</div></div>
   <div class="detail">
@@ -203,13 +207,13 @@ figure.arch figcaption{font-size:.8rem; color:var(--muted); padding:10px 8px 8px
     </div>
   </div>
   <div class="nav">
-    <a href="#"><i>📊</i>Soko</a>
-    <a class="on" href="#"><i>💼</i>Portfolio</a>
-    <a href="#"><i>👛</i>Wallet</a>
+    <a href="#s-soko"><i>📊</i>Soko</a>
+    <a class="on" href="#s-portfolio"><i>💼</i>Portfolio</a>
+    <a href="#s-wallet"><i>👛</i>Wallet</a>
   </div>
 </div>
 </div>
-<div class="framewrap"><div class="cap"><span class="n">4 · WALLET</span><b>Play-money now</b><small>M-Pesa previews with 5%/5% taxes shown honestly.</small></div>
+<div class="framewrap" id="s-wallet"><div class="cap"><span class="n">4 · WALLET</span><b>Play-money now</b><small>M-Pesa previews with 5%/5% taxes shown honestly.</small></div>
 <div class="phone">
   <div class="topbar"><div class="logo">uta<span>biri</span></div><div class="balance">UP 12,450</div></div>
   <div class="detail">
@@ -243,13 +247,13 @@ figure.arch figcaption{font-size:.8rem; color:var(--muted); padding:10px 8px 8px
     </div>
   </div>
   <div class="nav">
-    <a href="#"><i>📊</i>Soko</a>
-    <a href="#"><i>💼</i>Portfolio</a>
-    <a class="on" href="#"><i>👛</i>Wallet</a>
+    <a href="#s-soko"><i>📊</i>Soko</a>
+    <a href="#s-portfolio"><i>💼</i>Portfolio</a>
+    <a class="on" href="#s-wallet"><i>👛</i>Wallet</a>
   </div>
 </div>
 </div>
-<div class="framewrap ogwrap"><div class="cap"><span class="n">5 · SHARE CARD</span><b>The growth loop</b><small>Live-odds card built for the WhatsApp forward.</small></div>
+<div class="framewrap ogwrap" id="s-share"><div class="cap"><span class="n">5 · SHARE CARD</span><b>The growth loop</b><small>Live-odds card built for the WhatsApp forward.</small></div>
 <div class="og">
   <span class="k">SIASA · UTABIRI WA LEO · 15 NOV 2026</span>
   <h2>Ruto kushinda urais 2027?</h2>
@@ -486,4 +490,8 @@ figure.arch figcaption{font-size:.8rem; color:var(--muted); padding:10px 8px 8px
 </div>
 
 <div class="pfoot">Placeholder screens &amp; architecture, updated Nov 2026 · single-page preview · individual screens: <a href="home.html">feed</a> · <a href="market.html">market</a> · <a href="portfolio.html">portfolio</a> · <a href="wallet.html">wallet</a> · <a href="share-card.html">share card</a> · <a href="web.html">web</a></div>
+<script>
+/* Placeholder controls (href="#") do nothing instead of jumping to the top of the page. */
+document.addEventListener('click',function(e){var a=e.target.closest('a[href="#"]'); if(a) e.preventDefault();});
+</script>
 </body></html>
