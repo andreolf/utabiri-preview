@@ -72,3 +72,19 @@ body{margin:0; background:var(--ground); color:var(--ink);
 .tx{display:flex; justify-content:space-between; font-size:.8rem; padding:7px 0; border-bottom:1px solid var(--line)}
 .tx:last-child{border:none}
 .tx span:last-child{font-family:"Spline Sans Mono",monospace}
+
+/* ===== web (desktop) layout ===== */
+.web{max-width:1060px; margin:30px auto; background:var(--screen); border:1px solid var(--line); border-radius:14px; overflow:hidden; box-shadow:0 12px 40px rgba(20,30,20,.08)}
+.wbar{display:flex; align-items:center; gap:8px; background:var(--chip); border-bottom:1px solid var(--line); padding:9px 14px}
+.dot{width:10px; height:10px; border-radius:50%; background:var(--line)}
+.url{font-family:"Spline Sans Mono",monospace; font-size:.72rem; color:var(--muted); background:var(--card); border:1px solid var(--line); border-radius:999px; padding:4px 14px; margin-left:10px}
+.wnav{display:flex; align-items:center; gap:14px; padding:14px 22px; border-bottom:1px solid var(--line)}
+.wnav .logo{font-size:1.25rem}
+.wnav .chips{padding:0; flex:1}
+.wgrid{display:grid; grid-template-columns:330px 1fr; gap:0; min-height:560px}
+.wlist{border-right:1px solid var(--line); padding:14px; display:flex; flex-direction:column; gap:10px; background:var(--ground)}
+.wlist h5{margin:2px 4px 0; font-size:.7rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+.wmain{padding:22px 26px}
+.wmain .source{margin-bottom:10px}
+.wcols{display:grid; grid-template-columns:1fr 300px; gap:20px; align-items:start}
+@media (max-width:900px){.wgrid{grid-template-columns:1fr}.wlist{border-right:none;border-bottom:1px solid var(--line)}.wcols{grid-template-columns:1fr}}
