@@ -31,7 +31,7 @@ body{background:#EDEFE6}
 .frames{display:flex; gap:30px; overflow-x:auto; padding:8px 4px 22px; align-items:flex-start}
 html{scroll-behavior:smooth}
 .frames{scroll-snap-type:x proximity}
-.framewrap{flex:0 0 min(372px, calc(100vw - 48px)); min-width:0; scroll-snap-align:start; scroll-margin-top:16px}
+.framewrap{flex:0 0 min(372px, calc(100vw - 48px)); min-width:0; scroll-snap-align:start; scroll-margin-top:64px}
 .framewrap .cap{margin:0 0 12px}
 .framewrap .cap .n{font-family:"Spline Sans Mono",monospace; font-size:.72rem; font-weight:600; color:var(--accent)}
 .framewrap .cap b{display:block; font-size:.95rem}
@@ -82,12 +82,26 @@ figure.arch figcaption{font-size:.8rem; color:var(--muted); padding:10px 8px 8px
 .no{color:var(--no); font-weight:700}
 .mid{color:var(--muted)}
 .cmpnote{font-size:.74rem; color:var(--muted); margin-top:10px}
+/* feature-label column stays pinned while competitors scroll sideways */
+.cmp th:first-child, .cmp td:first-child{position:sticky; left:0; z-index:1; background:var(--card); box-shadow:1px 0 0 var(--line)}
+@media (max-width:720px){.cmp td:first-child{white-space:normal; min-width:92px; max-width:108px; font-size:.74rem; line-height:1.3}}
+/* section jump links */
+.jump{position:sticky; top:0; z-index:5; background:rgba(237,239,230,.92); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); margin-top:28px}
+.jump div{max-width:1120px; margin:0 auto; padding:9px 20px; display:flex; gap:8px; overflow-x:auto; scrollbar-width:none}
+.jump div::-webkit-scrollbar{display:none}
+.jump a{flex:none; font-family:"Spline Sans Mono",monospace; font-size:.72rem; font-weight:600; letter-spacing:.04em; color:var(--muted); text-decoration:none; border:1px solid var(--line); background:var(--card); border-radius:999px; padding:6px 13px; white-space:nowrap}
+.jump a:hover, .jump a:focus-visible{color:var(--accent); border-color:var(--accent)}
+.sect[id], h2[id]{scroll-margin-top:64px}
+@media (min-width:1160px){.jump div{justify-content:center}}
 
 </style></head><body>
 <div class="hero"><span class="eyebrow">Project Utabiri · public preview</span>
 <h1>uta<span style="color:var(--accent)">biri</span></h1>
 <p>Kenya-first prediction market — political outcomes, sports spreads and fast-resolving local markets, priced by an automated market maker, paid with M-Pesa, shared on WhatsApp/Telegram. Everything below is placeholder UI for the play-money beta.</p></div>
-<div class="sect"><span class="eyebrow">01</span><h2>Mobile app — the five screens</h2>
+<nav class="jump" aria-label="Sections"><div>
+<a href="#sec-screens">01 Screens</a><a href="#sec-web">02 Web</a><a href="#sec-architecture">03 Architecture</a><a href="#sec-build">04 Build plan</a><a href="#sec-africa">05 Africa</a><a href="#sec-global">06 Global</a>
+</div></nav>
+<div class="sect" id="sec-screens"><span class="eyebrow">01</span><h2>Mobile app — the five screens</h2>
 <p class="lead">Telegram Mini App + PWA. Scroll sideways through the flow: feed → market → portfolio → wallet → share card.</p>
 <div class="frames">
 <div class="framewrap" id="s-soko"><div class="cap"><span class="n">1 · SOKO</span><b>Market feed</b><small>Categories, live % + decimal odds, volume.</small></div>
@@ -268,7 +282,7 @@ figure.arch figcaption{font-size:.8rem; color:var(--muted); padding:10px 8px 8px
 </div>
 
 </div></div></div>
-<div class="sect"><span class="eyebrow">02</span><h2>Web version</h2>
+<div class="sect" id="sec-web"><span class="eyebrow">02</span><h2>Web version</h2>
 <p class="lead">Desktop layout — feed, market and bet slip on one screen. The web app is the canonical surface (and the MVP Ro raises on).</p>
 <div class="web">
   <div class="wbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">utabiri.co.ke/m/ruto-2027</span></div>
@@ -330,7 +344,7 @@ figure.arch figcaption{font-size:.8rem; color:var(--muted); padding:10px 8px 8px
   </div>
 </div>
 </div>
-<div class="sect"><span class="eyebrow">03</span><h2>MVP architecture</h2>
+<div class="sect" id="sec-architecture"><span class="eyebrow">03</span><h2>MVP architecture</h2>
 <p class="lead">One TypeScript monolith, four modules, one Postgres. Play-money first — the flip to real KES swaps the wallet's funding source, not the architecture. Dashed = licence-gated or phase 2.</p>
 <figure class="arch">
 <svg viewBox="0 0 900 632" role="img" aria-label="Utabiri MVP architecture: Telegram Mini App, web PWA and WhatsApp bot clients call one API gateway, which fronts four modules — trading engine, wallet, market service and compliance — on a single Postgres and Redis layer, with M-Pesa, Smile ID, resolution sources and messaging as external services. M-Pesa is licence-gated; the wallet flips from play-money to real KES.">
@@ -450,7 +464,7 @@ figure.arch figcaption{font-size:.8rem; color:var(--muted); padding:10px 8px 8px
     <dt>Messaging</dt><dd><span class="schip">Telegram Bot API</span><span class="schip">WhatsApp Cloud API</span><span class="schip">Africa's Talking SMS</span></dd>
     <dt>Infra</dt><dd><span class="schip">AWS af-south-1</span><span class="schip">Docker</span><span class="schip">Cloudflare</span><span class="schip">Sentry</span></dd>
   </dl>
-<span class="eyebrow" style="display:block;margin-top:26px">04</span><h2>Build sequence · 8–10 weeks to the beta</h2>
+<span class="eyebrow" style="display:block;margin-top:26px">04</span><h2 id="sec-build">Build sequence · 8–10 weeks to the beta</h2>
 <div class="weeks">
     <div class="wk"><span class="t">W1–2</span><b>Money core</b><p>Ledger, wallet, tax engine; Daraja in sandbox only</p></div>
     <div class="wk"><span class="t">W3–4</span><b>Trading engine</b><p>LMSR, positions, cash-out, admin market creation</p></div>
@@ -459,7 +473,7 @@ figure.arch figcaption{font-size:.8rem; color:var(--muted); padding:10px 8px 8px
     <div class="wk"><span class="t">W9–10</span><b>Growth loop</b><p>Share cards, WhatsApp bot, 5–10 launch markets</p></div>
   </div>
 </div>
-<div class="sect"><span class="eyebrow">05</span><h2>Competitive landscape — Africa</h2>
+<div class="sect" id="sec-africa"><span class="eyebrow">05</span><h2>Competitive landscape — Africa</h2>
 <p class="lead">Nobody in Africa combines a licence-first path, M-Pesa, live tradeable prices and transparent resolution. That combination is the differentiation.</p>
 <div class="cmpwrap"><table class="cmp">
 <tr><th></th><th class="u">Utabiri (planned)</th><th>5050Markets 🇰🇪</th><th>Bayse / ex-Gowagr 🇳🇬</th><th>Luno predictions 🇳🇬🇿🇦</th><th>SportPesa / Betika 🇰🇪</th></tr>
@@ -474,7 +488,7 @@ figure.arch figcaption{font-size:.8rem; color:var(--muted); padding:10px 8px 8px
 <tr><td>Partner / odds API</td><td class="u"><span class="ok">✓</span> phase 2 → telcos, betting platforms</td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td class="mid">closed</td></tr>
 </table></div>
 
-<span class="eyebrow" style="display:block;margin-top:34px">06</span><h2>Global benchmark</h2>
+<span class="eyebrow" style="display:block;margin-top:34px">06</span><h2 id="sec-global">Global benchmark</h2>
 <p class="lead">The playbook proven elsewhere, localized: every global CLOB needed paid market makers — a cold-start Kenyan market needs an AMM, mobile money and bookmaker-familiar pricing.</p>
 <div class="cmpwrap"><table class="cmp">
 <tr><th></th><th class="u">Utabiri (planned)</th><th>Polymarket</th><th>Kalshi</th><th>Betfair Exchange</th><th>Manifold</th></tr>
