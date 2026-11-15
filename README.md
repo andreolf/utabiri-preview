@@ -13,6 +13,7 @@ Clickable placeholder mockups of the Utabiri MVP flow (play-money beta). Start h
 | `wallet.html` | Wallet and transaction history |
 | `share-card.html` | WhatsApp/Telegram share card (OG image) |
 | `web.html` | Desktop web layout |
+| `og.png` | Link-preview image (1200×630), rendered from `og-source.html` with headless Chrome |
 
 `style.css` holds the shared styles for every page; `index.html` adds only its one-pager layout on top.
 
